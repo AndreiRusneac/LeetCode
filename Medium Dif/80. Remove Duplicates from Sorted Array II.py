@@ -1,23 +1,33 @@
 from  typing import List
 
+
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        initial_len = len(nums)
-        i = 0
-        counter = 0
-        while i < len(nums) - 1:
-            if nums[i] == nums[i + 1]:
-                j = i + 1
-                while j < len(nums) - 1 and nums[j] == nums[j + 1]:
-                    nums.pop(j + 1)
+        if not nums:
+            return 0
+
+        i = 1
+        ind = nums[0]
+        counter = 1
+        empty_pos = 1
+
+        while i < len(nums):
+            if nums[i] == ind:
+                if counter < 2:
+                    nums[empty_pos] = nums[i]
+                    empty_pos += 1
                     counter += 1
-                i = j
-            else:
                 i += 1
-        return initial_len - counter
+            else:
+                ind = nums[i]
+                counter = 1
+                nums[empty_pos] = nums[i]
+                empty_pos += 1
+                i += 1
 
+        return empty_pos
 
-nums = [1,1,1]
+nums = [0,0,1,1,1,1,2,3,3]
 sol = Solution()
 print(sol.removeDuplicates(nums))
 print(nums)
